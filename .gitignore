@@ -44,6 +44,10 @@ data/entrada_json/*
 data/saida_json/*
 data/logs/*
 data/curadoria/*
+data/eventos/*
+data/historico_premios.json
+data/historico_eventos.json
+data/entrada_scraped/*
 !data/entrada_pdfs/.gitkeep
 !data/entrada_json/.gitkeep
 !data/saida_json/.gitkeep
