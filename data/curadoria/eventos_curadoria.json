@@ -1,0 +1,61 @@
+{
+    "VTEX Day": {
+        "data_inicio": "2026-04-12",
+        "data_status": "confirmada",
+        "localizacao": {
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "local": "São Paulo Expo",
+            "formato": "presencial"
+        },
+        "custo": "pago",
+        "ia_foco_principal": true
+    },
+    "RD Summit": {
+        "data_inicio": "2026-11-06",
+        "data_status": "confirmada",
+        "localizacao": {
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "local": "Expo Center Norte",
+            "formato": "presencial"
+        },
+        "custo": "pago",
+        "regiao": "SP"
+    },
+    "Microsoft AI Tour": {
+        "data_inicio": "2026-02-11",
+        "data_status": "confirmada",
+        "localizacao": {
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "formato": "presencial"
+        },
+        "custo": "gratuito",
+        "ia_foco_principal": true
+    },
+    "Futurecom": {
+        "data_inicio": "2026-10-06",
+        "data_status": "confirmada",
+        "localizacao": {
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "local": "São Paulo Expo",
+            "formato": "presencial"
+        },
+        "custo": "pago",
+        "ia_foco_principal": true
+    },
+    "FEBRABAN TECH 2026": {
+        "data_inicio": "2026-10-24",
+        "data_status": "confirmada",
+        "localizacao": {
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "local": "Transamérica Expo Center",
+            "formato": "presencial"
+        },
+        "custo": "pago",
+        "ia_foco_principal": true
+    }
+}

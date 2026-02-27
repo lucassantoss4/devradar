@@ -1,0 +1,24 @@
+{
+    "web_Premio_Inovativos.json": {
+        "titulo": "Prêmio Inovativos",
+        "resumo": "O Prêmio Inovativos reconhece a transformação digital. Foco em sustentabilidade e negócios.",
+        "data_fim": "2025-08-31" 
+    },
+
+    "web_AEVO_Intraempreendedorismo.json": {
+        "titulo": "AEVO Intraempreendedorismo",
+        "resumo": "Focado em colaboradores que inovam dentro de grandes empresas.",
+        "data_fim": "2025-10-03"
+    },
+    "web_Prêmio_TOTVS_Brasil.json": {
+        "titulo": "Prêmio TOTVS Brasil",
+        "resumo": "O Prêmio TOTVS Brasil que Faz reconhece empresas que se destacam pela inovação e impacto positivo na sociedade.",
+        "data_fim": "2026-04-01"
+    },
+    "Valor Inovação Brasil 2026.pdf": {
+        "titulo": "Valor Inovação Brasil 2026",
+        "resumo": "Reconhecimento das empresas mais inovadoras do Brasil.",
+        "link_fonte": "https://survey.alchemer.com/s3/8668032/ValorInovacaoBrasil2026",
+        "data_fim": "2026-03-16"
+    }
+}

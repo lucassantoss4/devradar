@@ -1,0 +1,84 @@
+{
+  "eventos": [
+    {
+      "data": "11/2025",
+      "nome": "RD Summit 2025",
+      "local": "São Paulo/SP",
+      "area_foco": ["Marketing Digital", "Vendas", "Tecnologia", "Inovação"],
+      "custo": "Pago",
+      "link": "https://rdsummit.com.br/"
+    },
+    {
+      "data": "04/2026",
+      "nome": "VTEX Day 2026",
+      "local": "São Paulo/SP",
+      "area_foco": ["E-commerce", "Digital Commerce", "Inovação", "Tecnologia"],
+      "custo": "Pago",
+      "link": "https://vtexday.com.br/"
+    },
+    {
+      "data": "17/04/2026",
+      "nome": "VTEX Day 2026 (Expo)",
+      "local": "São Paulo Expo, SP",
+      "area_foco": ["E-commerce", "Plataformas Digitais"],
+      "custo": "A confirmar (Venda de lotes)",
+      "link": "https://vtex.eventos.tmp.br/vtexday2026/visitantes/inicio.php"
+    },
+    {
+      "data": "05/2026",
+      "nome": "AI + IM Brazil Fórum 2026",
+      "local": "São Paulo/SP",
+      "area_foco": ["Inteligência Artificial", "Gestão da Informação"],
+      "custo": "A confirmar",
+      "link": "Pesquisa de eventos"
+    },
+    {
+      "data": "09/2026",
+      "nome": "RD Summit 2026",
+      "local": "São Paulo/SP",
+      "area_foco": ["Marketing Digital", "Vendas", "E-commerce", "Dados"],
+      "custo": "A confirmar",
+      "link": "Pesquisa de eventos"
+    },
+    {
+      "data": "10/2026",
+      "nome": "Futurecom 2026",
+      "local": "São Paulo/SP",
+      "area_foco": ["Conectividade", "Telecomunicações", "Cloud", "Infraestrutura"],
+      "custo": "Pago",
+      "link": "https://www.futurecom.com.br/"
+    },
+    {
+      "data": "10/2026",
+      "nome": "Expo Fórum Digitalks 2026",
+      "local": "Expo Center Norte, SP",
+      "area_foco": ["Marketing Digital", "Tecnologia", "Negócios"],
+      "custo": "A confirmar",
+      "link": "Pesquisa de eventos"
+    },
+    {
+      "data": "Anual (Abr/Mai)",
+      "nome": "QCon SP",
+      "local": "São Paulo/SP",
+      "area_foco": ["Arquitetura de Software", "Cloud", "DevOps"],
+      "custo": "Gratuito / Pago",
+      "link": "https://qconsp.com/"
+    },
+    {
+      "data": "Datas variadas",
+      "nome": "Microsoft Ignite – The Tour",
+      "local": "Online",
+      "area_foco": ["Cloud (Azure)", "IA", "Software", "Segurança"],
+      "custo": "Gratuito",
+      "link": "https://ignite.microsoft.com/"
+    },
+    {
+      "data": "A confirmar",
+      "nome": "Expo Favela Innovation Brasil",
+      "local": "Brasil (itinerante)",
+      "area_foco": ["Inovação", "Empreendedorismo", "Impacto Social"],
+      "custo": "A confirmar",
+      "link": "https://expofavela.com.br"
+    }
+  ]
+}
