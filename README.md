@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">📡 DevRadar</h1>
   <p align="center">
-    <strong>Market Intelligence Platform — OCR · Web Scraping · Flask Dashboard</strong>
+    <strong>Market Intelligence Platform — OCR · Web Scraping · Flask Dashboard</strong></p>
 
 ---
 
@@ -12,8 +12,6 @@ DevRadar é uma plataforma de **monitoramento automatizado de oportunidades de i
 O sistema extrai, analisa e consolida informações de múltiplas fontes (PDFs, websites, APIs) em um painel visual com timeline, filtros e notificações por e-mail.
 
 ---
-
-  </p>
   <p align="center">
     <img src="https://img.shields.io/badge/python-3.11+-blue?logo=python&logoColor=white" alt="Python">
     <img src="https://img.shields.io/badge/flask-3.0-green?logo=flask&logoColor=white" alt="Flask">
