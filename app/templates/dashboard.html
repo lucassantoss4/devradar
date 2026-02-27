@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevRadar | Dashboard</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar-custom d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-4">
+            <i class="ph ph-radar" style="font-size: 2rem; color: var(--brand-blue);"></i>
+
+            <div class="brand-info">
+                <h5 class="m-0">DevRadar</h5>
+                <span>Innovation Intelligence</span>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button id="btn-run" class="btn-tech d-flex align-items-center gap-3" onclick="rodarPipeline()">
+                <i class="ph ph-lightning"></i> <span>Execute Pipeline</span>
+            </button>
+            <button class="btn-outline-tech d-flex align-items-center gap-3" onclick="toggleTheme()">
+                <i class="ph ph-moon" id="theme-icon"></i> <span id="theme-text">Theme</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Premium Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div>
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Processando Inteligência de Mercado...</div>
+        </div>
+    </div>
+
+    <main class="container py-5">
+
+        <div id="kpi-premios" class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Premiações Mapeadas</div>
+                    <div class="kpi-value">{{ oportunidades|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Inscrições Abertas</div>
+                    <div class="kpi-value" style="color: var(--status-success);">{{ oportunidades|selectattr('status',
+                        'equalto', 'ABERTO')|list|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Oportunidades Gratuitas</div>
+                    <div class="kpi-value" style="color: var(--brand-blue);">{{ oportunidades|selectattr('custo',
+                        'equalto', 'Gratuito')|list|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Monitoramento</div>
+                    <div class="kpi-value"
+                        style="font-size: 1.2rem; margin-top: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                        <span
+                            style="width: 10px; height: 10px; background: var(--status-success); border-radius: 50%; display: inline-block;"></span>Ativo
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="kpi-eventos" class="row g-4 mb-5 d-none">
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Eventos Tech</div>
+                    <div class="kpi-value">{{ eventos|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Gratuitos/Confirmar</div>
+                    <div class="kpi-value" style="color: var(--status-success);">{{ eventos|selectattr('custo',
+                        'equalto', 'gratuito')|list|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Eventos Pagos</div>
+                    <div class="kpi-value" style="color: var(--brand-orange);">{{ eventos|selectattr('custo', 'equalto',
+                        'pago')|list|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Próximos 12 Meses</div>
+                    <div class="kpi-value" style="color: var(--text-main);">{{ eventos|length }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="kpi-geral" class="row g-4 mb-5 d-none">
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Base de Dados</div>
+                    <div class="kpi-value">{{ oportunidades|length + eventos|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Próximas Ações</div>
+                    <div class="kpi-value" style="color: var(--brand-blue);">{{ timeline|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Visão Anual</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">2025/26</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-label">Status</div>
+                    <div class="kpi-value"
+                        style="font-size: 1.2rem; margin-top: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                        <span
+                            style="width: 10px; height: 10px; background: var(--status-success); border-radius: 50%; display: inline-block;"></span>100%
+                        Online
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container mb-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text tech-input-icon">
+                            <i class="ph ph-magnifying-glass" style="font-size: 1.2rem;"></i>
+                        </span>
+                        <input type="text" id="searchInput" class="form-control tech-input"
+                            placeholder="O que você procura? (Ex: IA, São Paulo, Gratuito...)">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-text tech-input-icon">
+                            <i class="ph ph-funnel"></i>
+                        </span>
+                        <select id="statusFilter" class="form-select tech-select">
+                            <option value="all">Status: Todos</option>
+                            <option value="ativo">🟢 Abertos / Confirmados</option>
+                            <option value="inativo">🔴 Encerrados / A Definir</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-text tech-input-icon">
+                            <i class="ph ph-coins"></i>
+                        </span>
+                        <select id="costFilter" class="form-select tech-select">
+                            <option value="all">Custo: Todos</option>
+                            <option value="gratuito">🎁 Gratuito</option>
+                            <option value="pago">💲 Pago</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="tab-premios" data-bs-toggle="tab" data-bs-target="#cards"
+                    type="button">
+                    <i class="ph ph-trophy"></i> Premiações
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-eventos" data-bs-toggle="tab" data-bs-target="#eventos" type="button">
+                    <i class="ph ph-calendar-check"></i> Agenda Tech
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-timeline" data-bs-toggle="tab" data-bs-target="#timeline"
+                    type="button">
+                    <i class="ph ph-git-commit"></i> Linha do Tempo
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-tabela" data-bs-toggle="tab" data-bs-target="#tabela" type="button">
+                    <i class="ph ph-list-dashes"></i> Tabela Geral
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="cards">
+                <div class="row g-4">
+                    {% for item in oportunidades %}
+                    <div class="col-md-4 searchable-item" data-search="{{ item.titulo }} {{ item.resumo }}"
+                        data-status="{{ 'ativo' if item.status == 'ABERTO' else 'inativo' }}"
+                        data-custo="{{ 'gratuito' if 'Gratuito' in item.custo else 'pago' }}">
+
+                        <div class="tech-card">
+                            <img src="{{ item.logo_bg or '/static/images/default.png' }}" class="card-watermark"
+                                alt="Logo">
+                            <div class="card-content">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        {% if item.status == 'ABERTO' %}
+                                        <span class="badge-custom badge-success"><i class="ph ph-check-circle"></i>
+                                            Aberto</span>
+                                        {% else %}
+                                        <span class="badge-custom badge-danger"><i class="ph ph-x-circle"></i>
+                                            Encerrado</span>
+                                        {% endif %}
+                                        <small style="color: var(--text-muted); font-size: 0.7rem;">ID: {{ loop.index
+                                            }}</small>
+                                    </div>
+                                    <h5 class="fw-bold mb-2" style="font-size: 1.1rem; line-height: 1.4;">{{ item.titulo
+                                        }}</h5>
+                                    <p
+                                        style="color: var(--text-muted); font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                        {{ item.resumo }}</p>
+                                    <div class="mt-4 mb-3 d-flex flex-wrap gap-2">
+                                        <span class="badge-custom badge-blue"><i class="ph ph-calendar"></i> {{
+                                            item.data_inscricao_fim or 'A definir' }}</span>
+                                        <span class="badge-custom badge-orange"><i class="ph ph-coins"></i> {{
+                                            item.custo }}</span>
+                                    </div>
+                                </div>
+                                <div class="pt-3" style="border-top: 1px solid var(--border-color);">
+                                    <a href="{{ item.link_fonte }}" target="_blank" class="btn btn-outline-tech w-100"
+                                        style="border: 1px solid var(--border-color); font-size: 0.85rem; background: rgba(var(--bg-card), 0.7); backdrop-filter: blur(5px);">Acessar
+                                        Fonte Oficial <i class="ph ph-arrow-up-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="eventos">
+                <div class="row g-4">
+                    {% for evento in eventos %}
+                    <div class="col-md-4 searchable-item"
+                        data-search="{{ evento.nome }} {{ evento.localizacao.cidade }} {{ evento.areas_foco|join(' ') }}"
+                        data-status="{{ 'ativo' if evento.data_status == 'confirmada' else 'inativo' }}"
+                        data-custo="{{ 'gratuito' if 'gratuito' in evento.custo|lower else 'pago' }}">
+
+                        <div class="tech-card d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    {% if evento.data_status == 'confirmada' %}
+                                    <span class="badge-custom badge-corporate"><i class="ph ph-calendar-blank"></i> {{
+                                        evento.data_inicio[-2:] }}/{{ evento.data_inicio[5:7] }}/{{
+                                        evento.data_inicio[:4] }}</span>
+                                    {% else %}
+                                    <span class="badge-custom badge-warning"><i class="ph ph-clock"></i> A
+                                        Confirmar</span>
+                                    {% endif %}
+                                    <span class="badge-custom badge-platinum">{{ evento.localizacao.estado }}</span>
+                                </div>
+
+                                <h5 class="fw-bold mb-2" style="font-size: 1.1rem; color: var(--text-main);">{{
+                                    evento.nome }}</h5>
+
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+                                    <i class="ph ph-map-pin"></i>
+                                    {% if evento.localizacao.formato == 'online' %}
+                                    Evento Online
+                                    {% else %}
+                                    {{ evento.localizacao.cidade }} {% if evento.localizacao.local %} • {{
+                                    evento.localizacao.local }} {% endif %}
+                                    {% endif %}
+                                </p>
+
+                                <div class="d-flex gap-2 mb-3">
+                                    {% if evento.ia_foco_principal %}
+                                    <span class="badge-custom badge-corporate">✨ IA Core</span>
+                                    {% endif %}
+                                    <span class="badge-custom badge-platinum">{{ evento.publico_alvo }}</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="d-flex flex-wrap gap-1 mt-1">
+                                        {% for area in evento.areas_foco %}
+                                        <span class="badge-custom badge-platinum">{{ area }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center pt-3"
+                                style="border-top: 1px solid var(--border-color);">
+                                <span class="badge-custom badge-warning">{{ evento.custo }}</span>
+                                <a href="{{ evento.link }}" target="_blank" class="btn btn-sm btn-outline-tech">Site
+                                    Oficial <i class="ph ph-arrow-up-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="timeline">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="timeline-container">
+                            {% set ns = namespace(last_month=None) %}
+                            {% for item in timeline %}
+                            {% if item.grupo_mes != ns.last_month %}
+                            <div class="timeline-month">{{ item.grupo_mes }}</div>
+                            {% set ns.last_month = item.grupo_mes %}
+                            {% endif %}
+
+                            <div class="timeline-item searchable-item {{ 'timeline-past' if item.status == 'PASSADO' else '' }}"
+                                data-search="{{ item.titulo }} {{ item.subtitulo }}"
+                                data-status="{{ 'ativo' if item.status == 'FUTURO' else 'inativo' }}"
+                                data-custo="{{ 'gratuito' if 'gratuito' in item.tag|lower else 'pago' }}">
+
+                                <div class="timeline-dot"
+                                    style="{{ 'background-color: #6c757d;' if item.status == 'PASSADO' else ('background-color: var(--brand-orange);' if item.tipo == 'premio' else 'background-color: var(--brand-blue);') }}">
+                                </div>
+                                <div
+                                    class="timeline-content {{ 'pulse-card' if loop.index0 == 0 and item.status == 'FUTURO' and item.data_obj else '' }}">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <span class="timeline-date"
+                                                    style="{{ 'color: var(--brand-orange);' if item.tipo == 'premio' else 'color: var(--brand-blue);' }}">
+                                                    {{ item.data_display }}
+                                                </span>
+                                                {% if item.status == 'FUTURO' and item.data_obj %}
+                                                <span class="badge-custom badge-warning"><i class="ph ph-timer"></i>
+                                                    Faltam {{ item.dias_restantes }} dias</span>
+                                                {% elif item.status == 'PASSADO' %}
+                                                <span class="badge-custom badge-success"><i class="ph ph-check"></i>
+                                                    Concluído</span>
+                                                {% endif %}
+                                            </div>
+                                            <h5 class="fw-bold m-0">{{ item.titulo }}</h5>
+                                            <small style="color: var(--text-muted);">
+                                                {% if item.tipo == 'premio' %} <i class="ph ph-trophy"></i> Prêmio • {{
+                                                item.tag }} {% else %} <i class="ph ph-calendar-check"></i> {{
+                                                item.subtitulo }} {% endif %}
+                                            </small>
+                                        </div>
+                                        <a href="{{ item.link }}" target="_blank" class="btn btn-sm btn-outline-tech"><i
+                                                class="ph ph-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="text-center mt-5 mb-3"><small style="color: var(--text-muted);">Fim da linha do
+                                    tempo prevista.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabela">
+                <div class="tech-card p-0" style="overflow: hidden;">
+                    <div class="table-responsive">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Tipo / Nome</th>
+                                    <th>Prazo / Data</th>
+                                    <th>Status</th>
+                                    <th>Custo</th>
+                                    <th style="text-align: right;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in oportunidades %}
+                                <tr class="searchable-item" data-search="{{ item.titulo }}"
+                                    data-status="{{ 'ativo' if item.status == 'ABERTO' else 'inativo' }}"
+                                    data-custo="{{ 'gratuito' if 'Gratuito' in item.custo else 'pago' }}">
+
+                                    <td class="fw-medium">
+                                        <div class="d-flex align-items-center gap-2"><span
+                                                style="color: var(--brand-orange);"><i
+                                                    class="ph ph-trophy"></i></span><img
+                                                src="{{ item.logo_bg or '/static/images/default.png' }}"
+                                                class="table-logo" alt="Logo">{{ item.titulo }}</div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono);">{{ item.data_inscricao_fim }}</td>
+                                    <td>{% if item.status == 'ABERTO' %} <span class="badge-custom badge-success"><i
+                                                class="ph ph-check-circle"></i> Aberto</span> {% else %} <span
+                                            class="badge-custom badge-danger"><i class="ph ph-x-circle"></i>
+                                            Encerrado</span> {% endif %}</td>
+                                    <td><span class="badge-custom badge-warning"><i class="ph ph-coins"></i> {{
+                                            item.custo }}</span></td>
+                                    <td style="text-align: right;"><a href="{{ item.link_fonte }}" target="_blank"
+                                            class="btn btn-sm btn-outline-tech">Edital <i
+                                                class="ph ph-arrow-right"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                                {% for item in eventos %}
+                                <tr class="searchable-item" data-search="{{ item.nome }}"
+                                    data-status="{{ 'ativo' if item.data_status == 'confirmada' else 'inativo' }}"
+                                    data-custo="{{ 'gratuito' if 'gratuito' in item.custo|lower else 'pago' }}">
+
+                                    <td class="fw-medium">
+                                        <div class="d-flex align-items-center gap-2"><span
+                                                style="color: var(--brand-blue);"><i
+                                                    class="ph ph-calendar-check"></i></span>
+                                            <div class="table-logo d-flex align-items-center justify-content-center"
+                                                style="background: rgba(59, 130, 246, 0.1);"><i class="ph ph-users"
+                                                    style="font-size: 14px; color: var(--brand-blue);"></i></div>{{
+                                            item.nome }}
+                                        </div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono);">{% if item.data_status == 'confirmada'
+                                        %}{{ item.data_inicio[-2:] }}/{{ item.data_inicio[5:7] }}/{{
+                                        item.data_inicio[:4] }}{% else %}A Definir{% endif %}</td>
+                                    <td><span class="badge-custom badge-corporate"><i class="ph ph-calendar-check"></i>
+                                            Agendado</span></td>
+                                    <td><span class="badge-custom badge-warning"><i class="ph ph-coins"></i> {{
+                                            item.custo }}</span></td>
+                                    <td style="text-align: right;"><a href="{{ item.link }}" target="_blank"
+                                            class="btn btn-sm btn-outline-tech">Site <i
+                                                class="ph ph-arrow-up-right"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+
+</html>

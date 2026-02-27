@@ -1,0 +1,26 @@
+# =============================================================================
+# DevRadar — Python Dependencies
+# =============================================================================
+# Testado em Python 3.11+
+# Para gerar um lockfile: pip freeze > requirements.lock
+# =============================================================================
+
+# --- Web Server ---
+flask>=3.0
+gunicorn>=21.2          # Produção Linux via WSGI
+
+# --- Configuração ---
+python-dotenv>=1.0
+
+# --- Manipulação de Dados ---
+pandas>=2.0
+openpyxl>=3.1
+
+# --- Web Scraping & Navegação ---
+crawl4ai
+playwright
+requests>=2.31          # HTTP direto (fallback e webhooks)
+
+# --- Leitura de PDF & IA (OCR) ---
+# docling requer dependências de sistema — ver Dockerfile
+docling

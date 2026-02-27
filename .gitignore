@@ -1,0 +1,67 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ===========================
+# Virtual Environments
+# ===========================
+.venv/
+venv/
+env/
+ENV/
+
+# ===========================
+# Secrets & Credentials (CRITICAL)
+# ===========================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets.json
+
+# ===========================
+# Flask / Runtime
+# ===========================
+.flaskenv
+instance/
+*.sqlite3
+*.db
+
+# ===========================
+# Project Data (may contain scraped PII or internal data)
+# ===========================
+data/entrada_pdfs/*
+data/entrada_json/*
+data/saida_json/*
+data/logs/*
+data/curadoria/*
+!data/entrada_pdfs/.gitkeep
+!data/entrada_json/.gitkeep
+!data/saida_json/.gitkeep
+!data/logs/.gitkeep
+!data/curadoria/.gitkeep
+
+# ===========================
+# IDEs & Editors
+# ===========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.agent/
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
